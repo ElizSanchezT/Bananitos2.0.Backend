@@ -11,6 +11,8 @@ namespace Calzaditos.Database
         }
 
         public DbSet<Cart> Carts => Set<Cart>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Product> Products => Set<Product>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
