@@ -1,4 +1,4 @@
-# Calzaditos Backend (.NET Core 8)
+# Calzaditos Backend (.NET 8)
 
 Este proyecto contiene el código para el Backend de Calzaditos
 
@@ -21,6 +21,5 @@ Crear una base de datos nueva en SQL Server, luego agregar la cadena de conexió
 
 ## Pendientes (infraestructura)
 
-1. Agregar Swagger
-2. Agregar Autenticación
-3. Agregar Logging simple (a archivo de texto)
+1. Agregar Autenticación
+2. Agregar Logging simple (a archivo de texto)

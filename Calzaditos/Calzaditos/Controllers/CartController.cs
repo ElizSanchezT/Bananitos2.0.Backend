@@ -7,6 +7,7 @@ using System.Text.Json;
 namespace Calzaditos.Controllers
 {
     [Route("Cart")]
+    [Produces("application/json")]
     public class CartController : Controller
     {
         private readonly CartRepository _repository;
@@ -30,7 +31,7 @@ namespace Calzaditos.Controllers
                     IsSuccess = false
                 };
 
-                return Json(JsonSerializer.Serialize(errorResponse));
+                return Json(errorResponse);
             }
 
             var cartResponse = new CartResponse
@@ -56,7 +57,7 @@ namespace Calzaditos.Controllers
                 IsSuccess = true
             };
 
-            return Json(JsonSerializer.Serialize(response));
+            return Json(response);
         }
 
         [HttpPost]
@@ -71,7 +72,7 @@ namespace Calzaditos.Controllers
                     Message = null,
                     IsSuccess = false
                 };
-                return Json(JsonSerializer.Serialize(errorResponse));
+                return Json(errorResponse);
             }
 
             var result = await _repository.AddProduct(1, productId, units); //TODO Obtener el Id del usuario autenticado
@@ -83,7 +84,7 @@ namespace Calzaditos.Controllers
                 IsSuccess = result
             };
 
-            return Json(JsonSerializer.Serialize(response));
+            return Json(response);
         }
     }
 }

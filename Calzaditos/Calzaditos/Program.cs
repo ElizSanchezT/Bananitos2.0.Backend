@@ -12,6 +12,8 @@ builder.Services.AddEntityFramework(builder.Configuration, builder.Environment);
 
 builder.Services.AddTransient<CartRepository>();
 
+builder.Services.AddSwaggerGen();
+
 var connectionString = builder.Configuration.GetConnectionString("CalzaditosDB")
             ?? throw new ArgumentException("ConnectionString not configured");
 
@@ -52,5 +54,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Default}/{action=Index}/{id?}");
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 app.Run();
