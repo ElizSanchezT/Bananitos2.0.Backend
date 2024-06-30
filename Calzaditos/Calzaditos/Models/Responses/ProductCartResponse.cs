@@ -2,11 +2,12 @@
 {
     public class ProductCartResponse
     {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; } = default!;
-        public string? ProductDescription { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = default!;
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
         public int Units { get; set; }
-        public string? ProductImageUrl { get; set; }
-        public decimal Size { get; set; }
+        public string? ImageUrl { get; set; }
+        public int Size { get; set; }
     }
 }

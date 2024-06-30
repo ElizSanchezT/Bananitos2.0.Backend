@@ -13,6 +13,7 @@ namespace Calzaditos.Database
         public DbSet<Cart> Carts => Set<Cart>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<PromoCode> PromoCodes => Set<PromoCode>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -51,10 +52,22 @@ namespace Calzaditos.Database
                 config.Property(x => x.CreatedAt)
                     .HasColumnType("datetime2");
             });
+            builder.Entity<PromoCode>(config =>
+            {
+                config.Property(x => x.DeletedAt)
+                    .HasColumnType("datetime2");
+                config.Property(x => x.CreatedAt)
+                    .HasColumnType("datetime2");
+            });
 
             builder.Entity<ProductCart>(config =>
             {
                 config.ToTable("Product_Cart");
+            });
+
+            builder.Entity<ProductSize>(config =>
+            {
+                config.ToTable("Product_Size");
             });
         }
 

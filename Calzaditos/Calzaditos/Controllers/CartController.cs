@@ -1,8 +1,6 @@
-﻿using Calzaditos.Models;
-using Calzaditos.Models.Responses;
+﻿using Calzaditos.Models.Responses;
 using Calzaditos.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace Calzaditos.Controllers
 {
@@ -10,17 +8,17 @@ namespace Calzaditos.Controllers
     [Produces("application/json")]
     public class CartController : Controller
     {
-        private readonly CartRepository _repository;
-        public CartController(CartRepository repository)
+        private readonly ICartRepository _repository;
+        public CartController(ICartRepository repository)
         {
             _repository = repository;
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetCart(int id)
+        [Route("User/{id:int}")]
+        public async Task<IActionResult> GetCart(int userId)
         {
-            var cart = await _repository.GetCart(id);
+            var cart = await _repository.GetCart(userId);
 
             if (cart is null)
             {
@@ -36,17 +34,18 @@ namespace Calzaditos.Controllers
 
             var cartResponse = new CartResponse
             {
-                Id = id,
-                UserId = cart.UserId,
+                Id = cart.Id,
+                UserId = userId,
                 Products = cart.Products
                     .Select(p => new ProductCartResponse
                     {
-                        ProductId = p.ProductId,
-                        ProductDescription = p.Product.Description,
-                        ProductName = p.Product.Name,
-                        ProductImageUrl = p.Product.ImageUrl,
-                        Size = p.Product.Size,
-                        Units = p.Units
+                        Id = p.ProductId,
+                        Description = p.Product.Description,
+                        Name = p.Product.Name,
+                        Price = p.Product.Price,
+                        ImageUrl = p.Product.ImageUrl,
+                        Units = p.Units,
+                        Size = p.SelectedSize
                     }).ToList(),
             };
 
@@ -62,7 +61,7 @@ namespace Calzaditos.Controllers
 
         [HttpPost]
         [Route("AddProduct")]
-        public async Task<IActionResult> AddProduct(int productId, int units) 
+        public async Task<IActionResult> AddProduct(int productId, int selectedSize, int units) 
         {
             if(units<=0) 
             {
@@ -75,11 +74,27 @@ namespace Calzaditos.Controllers
                 return Json(errorResponse);
             }
 
-            var result = await _repository.AddProduct(1, productId, units); //TODO Obtener el Id del usuario autenticado
+            var result = await _repository.AddProduct(1, productId, units, selectedSize); //TODO Obtener el Id del usuario autenticado
 
             var response = new Response<string>(null)
             {
                 Error = result ? null : "No se pudo agregar el producto",
+                Message = result ? "OK" : null,
+                IsSuccess = result
+            };
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        [Route("RemoveProduct")]
+        public async Task<IActionResult> RemoveProduct(int userId, int productId)
+        {
+            var result = await _repository.RemoveProduct(userId, productId);
+
+            var response = new Response<string>(null)
+            {
+                Error = result ? null : "No objeto en el carrito de compras",
                 Message = result ? "OK" : null,
                 IsSuccess = result
             };

@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Calzaditos.Repositories
 {
-    public class CartRepository : BaseRepository
+    public class CartRepository : BaseRepository, ICartRepository
     {
         public CartRepository(CalzaditosDbContext context) : base(context)
         {
 
         }
 
-        public async Task<Cart?> GetCart(int id) => 
+        public async Task<Cart?> GetCart(int userId) => 
             await _context.Carts
                 .Include(c => c.Products)
                     .ThenInclude(pc => pc.Product)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.UserId == userId);
 
-        public async Task<bool> AddProduct(int userId, int productId, int units)
+        public async Task<bool> AddProduct(int userId, int productId, int units, int selectedSize)
         {
             try
             {
@@ -43,7 +43,8 @@ namespace Calzaditos.Repositories
                 { 
                     CartId = cart.Id,
                     ProductId = productId,
-                    Units = units                    
+                    Units = units,
+                    SelectedSize = selectedSize
                 };
 
                 _context.Add(product);

@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddEntityFramework(builder.Configuration, builder.Environment);
 
-builder.Services.AddTransient<CartRepository>();
+builder.Services.AddTransient<ICartRepository,CartRepository>();
 
 builder.Services.AddSwaggerGen();
 
