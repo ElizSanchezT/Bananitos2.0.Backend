@@ -15,7 +15,7 @@ namespace Calzaditos.Controllers
         }
 
         [HttpGet]
-        [Route("User/{id:int}")]
+        [Route("User/{userId:int}")]
         public async Task<IActionResult> GetCart(int userId)
         {
             var cart = await _repository.GetCart(userId);

@@ -54,11 +54,11 @@ insert into Product
 )
 values
 ( 'Zapato de vestir Slingbling Nude', 'Zapatos de vestir con taco N5, capellada PU, forro de cuero', 'Nude', 99.99, 5, 'public/assets/img/product/Vizano.jpg', 6, GETDATE()),
-( 'Botas de vestir Camila', 'Botas de cuero con detalle único, su diseño aporta elegancia y mucho estilo','Negro', 350, 5, 'public/assets/img/product/.jpg', 1, GETDATE()),
+( 'Botas de vestir Camila', 'Botas de cuero con detalle único, su diseño aporta elegancia y mucho estilo','Negro', 350, 5, 'public/assets/img/product/Bata.jpg', 1, GETDATE()),
 ( 'Zapato de vestir CallSpring', 'Zapatos de vestir elegantes y comodos con taco N9', 'Nude', 149.90, 5, 'public/assets/img/product/callSpring1.png', 3, GETDATE()),
 ( 'Zapato elegante Caramelo', 'Zapatos elegante de dama con aplicaciones doradas y cuero importado taco N12', 'Nude',189.90, 5, 'public/assets/img/product/Azaleia.jpg', 2, GETDATE()),
-( 'Zapato casual Coleccion Free ', 'Zapatos casuales para dama en cuero con taco N3 para mayor comodidad', 'Negro', 209.95, 4, 'public/assets/img/product/Vizano.png', 4, GETDATE()),
-( 'Zapato elegante Collecion Princes', 'Zapatos elegante de vestir con taco N7, y aplicaciones en piedras', 'Azul', 259.95, 5, 'public/assets/img/product/Vizano.png', 5, GETDATE())
+( 'Zapato casual Coleccion Free ', 'Zapatos casuales para dama en cuero con taco N3 para mayor comodidad', 'Negro', 209.95, 4, 'public/assets/img/product/Ciara.jpg', 4, GETDATE()),
+( 'Zapato elegante Collecion Princes', 'Zapatos elegante de vestir con taco N7, y aplicaciones en piedras', 'Azul', 259.95, 5, 'public/assets/img/product/Viale1.jpg', 5, GETDATE())
 
 insert into Product_Size
 (
