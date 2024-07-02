@@ -28,11 +28,50 @@ namespace Calzaditos.Controllers
                         DiscountedPrice = x.Price * (1 - (x.Discount ?? 0)),
                         Price = x.Price,
                         ImageUrl = x.ImageUrl,
+                        BrandId = x.BrandId,
                         Sizes = x.Sizes.Select(x => x.Size).ToList()
                     });
 
 
             var result = new Response<IEnumerable<ProductResponse>>(products)
+            {
+                Error = "",
+                IsSuccess = true,
+                Message = "OK"
+            };
+
+            return Json(result);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _repository.GetProduct(id);
+
+            if(product is null)
+            {
+                return Json(new Response<ProductResponse>(null)
+                {
+                    Error = "No se encontró producto"
+                });
+            }
+
+                
+            var productResponse = new ProductResponse
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Discount = product.Discount * 100,
+                DiscountedPrice = product.Price * (1 - (product.Discount ?? 0)),
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                BrandId = product.BrandId,
+                Sizes = product.Sizes.Select(x => x.Size).ToList()
+            };
+
+
+            var result = new Response<ProductResponse>(productResponse)
             {
                 Error = "",
                 IsSuccess = true,

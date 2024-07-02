@@ -10,6 +10,13 @@ namespace Calzaditos.Repositories
         {
         }
 
+        public Task<Product?> GetProduct(int id) =>
+            _context.Products
+               .Include(x => x.Sizes)
+               .Where(x => x.Id == id && x.DeletedAt == null)
+               .FirstOrDefaultAsync();
+        
+
         public Task<List<Product>> GetProducts() => 
             _context.Products
                 .Include(x => x.Sizes)

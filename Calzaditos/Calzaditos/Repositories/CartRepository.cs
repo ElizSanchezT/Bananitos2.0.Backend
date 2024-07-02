@@ -17,6 +17,10 @@ namespace Calzaditos.Repositories
                     .ThenInclude(pc => pc.Product)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
+        public async Task<PromoCode?> GetCupon(string cupon) =>
+            await _context.PromoCodes
+             .FirstOrDefaultAsync(c => c.Code == cupon);
+
         public async Task<bool> AddProduct(int userId, int productId, int units, int selectedSize)
         {
             try

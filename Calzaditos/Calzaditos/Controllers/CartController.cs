@@ -59,6 +59,34 @@ namespace Calzaditos.Controllers
             return Json(response);
         }
 
+        [HttpGet]
+        [Route("Cupon")]
+        public async Task<IActionResult> GetCupon(string cupon)
+        {
+            var code = await _repository.GetCupon(cupon);
+            if (code is null)
+            {
+                var errorResponse = new Response<PromoCodeResponse>(null)
+                {
+                    Error = "Cupon no existe",
+                    Message = null,
+                    IsSuccess = false
+                };
+
+                return Json(errorResponse);
+            }
+            var codeResponse = new PromoCodeResponse { Amount = code.Amount, Cupon = code.Code };
+            var response = new Response<PromoCodeResponse>(codeResponse)
+            {
+                Error = null,
+                Message = "OK",
+                IsSuccess = true
+            };
+
+            return Json(response);
+        }
+
+
         [HttpPost]
         [Route("AddProduct")]
         public async Task<IActionResult> AddProduct(int productId, int selectedSize, int units) 

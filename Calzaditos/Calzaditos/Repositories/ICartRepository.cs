@@ -9,5 +9,6 @@ namespace Calzaditos.Repositories
         Task<bool> RemoveProduct(int userId, int productId);
         Task<bool> EmptyCart(int userId);
         Task<bool> DeleteCart(int userId);
+        Task<PromoCode?> GetCupon(string cupon);
     }
 }
