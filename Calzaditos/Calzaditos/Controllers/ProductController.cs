@@ -67,6 +67,7 @@ namespace Calzaditos.Controllers
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 BrandId = product.BrandId,
+                Description = product.Description,
                 Sizes = product.Sizes.Select(x => x.Size).ToList()
             };
 

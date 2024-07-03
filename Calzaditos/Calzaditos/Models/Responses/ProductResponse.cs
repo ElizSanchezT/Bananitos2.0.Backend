@@ -9,6 +9,7 @@
         public decimal? Discount { get; set; }
         public decimal DiscountedPrice { get; set; }
         public int BrandId { get; set; }
+        public string? Description { get; set; }
         public List<int> Sizes { get; set; } = [];
 
     }
