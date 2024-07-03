@@ -129,5 +129,22 @@ namespace Calzaditos.Controllers
 
             return Json(response);
         }
+
+        [HttpPost]
+        [Route("Empty")]
+        public async Task<IActionResult> EmptyCart(int userId)
+        {
+            var result = await _repository.EmptyCart(userId);
+
+            var response = new Response<string>(null)
+            {
+                Error = result ? null : "No objeto en el carrito de compras",
+                Message = result ? "OK" : null,
+                IsSuccess = result
+            };
+
+            return Json(response);
+        }
+
     }
 }
