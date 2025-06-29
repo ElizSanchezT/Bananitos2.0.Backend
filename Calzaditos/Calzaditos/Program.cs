@@ -12,6 +12,7 @@ builder.Services.AddEntityFramework(builder.Configuration, builder.Environment);
 
 builder.Services.AddTransient<ICartRepository,CartRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddSwaggerGen();
 

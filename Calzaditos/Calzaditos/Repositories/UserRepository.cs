@@ -24,12 +24,12 @@ namespace Calzaditos.Repositories
             return VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
         }
 
-        public async Task<bool> RegisterUser(string userName, string password)
+        public async Task<bool> RegisterUser(string userName, string fullName, string password)
         {
             if (await _context.Users.AnyAsync(u => u.Email == userName))
             { 
                 return false;
-            }                
+            }
 
             CreatePasswordHash(password, out string hash, out string salt);
 
@@ -38,13 +38,14 @@ namespace Calzaditos.Repositories
                 Email = userName,
                 PasswordHash = hash,
                 PasswordSalt = salt,
+                FullName = fullName
             };
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return true;
         }
-        private void CreatePasswordHash(string password, out string passwordHash, out string passwordSalt)
+        private static void CreatePasswordHash(string password, out string passwordHash, out string passwordSalt)
         {
             using var hmac = new HMACSHA512();
             passwordSalt = Convert.ToBase64String(hmac.Key);
@@ -52,7 +53,7 @@ namespace Calzaditos.Repositories
             passwordHash = Convert.ToBase64String(hash);
         }
 
-        private bool VerifyPassword(string password, string storedHash, string storedSalt)
+        private static bool VerifyPassword(string password, string storedHash, string storedSalt)
         {
             using var hmac = new HMACSHA512(Convert.FromBase64String(storedSalt));
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
