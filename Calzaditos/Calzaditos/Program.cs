@@ -38,10 +38,10 @@ if (!result.Successful)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "Angular",
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:4200");
-                      });
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200");
+        });
 });
 
 var app = builder.Build();
