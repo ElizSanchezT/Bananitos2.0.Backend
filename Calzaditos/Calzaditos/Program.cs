@@ -12,6 +12,7 @@ builder.Services.AddEntityFramework(builder.Configuration, builder.Environment);
 
 builder.Services.AddTransient<ICartRepository,CartRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddSwaggerGen();
 
@@ -35,15 +36,6 @@ if (!result.Successful)
     Console.ReadLine();
 }
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "Angular",
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:4200");
-                      });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,7 +46,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseCors("Angular");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
