@@ -27,8 +27,8 @@ namespace Calzaditos.Repositories
             {
                 var userExists = await _context.Users.AnyAsync(x => x.Id == userId && x.DeletedAt == null); //TODO remover validación cuando haya autenticación y autorización
                 var productExists = await _context.Products.AnyAsync(p => p.Id == productId && p.DeletedAt == null);
-                
-                if (!userExists || !productExists) 
+
+                if (!userExists || !productExists)
                 {
                     return false;
                 }
@@ -36,22 +36,27 @@ namespace Calzaditos.Repositories
                 var cart = await _context.Carts
                     .FirstOrDefaultAsync(x => x.UserId == userId && x.DeletedAt == null);
 
-                if(cart is null) 
+                if (cart is null)
                 {
                     cart = new Cart { UserId = userId };
                     _context.Add(cart);
                     await _context.SaveChangesAsync();
-                }                
+                }
 
-                var product = new ProductCart 
-                { 
+                if (cart.Products.Any(x => x.ProductId == productId))
+                {
+                    var existingProduct = cart.Products.First(p => p.ProductId == productId);
+                    _context.Remove(existingProduct);                    
+                }
+
+                var product = new ProductCart
+                {
                     CartId = cart.Id,
                     ProductId = productId,
                     Units = units,
                     SelectedSize = selectedSize
                 };
-
-                _context.Add(product);
+                _context.Add(product);                              
 
                 await _context.SaveChangesAsync();
 

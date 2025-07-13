@@ -13,15 +13,20 @@ namespace Calzaditos.Repositories
         {
             
         }
-        public async Task<bool> LoginUser(string userName, string password)
+        public async Task<User?> LoginUser(string userName, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userName);
             if (user == null)
             { 
-                return false;
+                return null;
             }
 
-            return VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+            if(VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return user;
+            }
+
+            return null;
         }
 
         public async Task<bool> RegisterUser(string userName, string fullName, string password)
@@ -45,6 +50,10 @@ namespace Calzaditos.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public Task<User?> GetUser(int userId) =>         
+              _context.Users.FirstOrDefaultAsync(x => x.Id == userId);           
+        
         private static void CreatePasswordHash(string password, out string passwordHash, out string passwordSalt)
         {
             using var hmac = new HMACSHA512();
