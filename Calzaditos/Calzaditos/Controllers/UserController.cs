@@ -74,9 +74,9 @@ namespace Calzaditos.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterUserAsync(string userName, string fullName, string password)
+        public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUserRequest request)
         {
-            var success = await _userRepository.RegisterUser(userName, fullName,  password);
+            var success = await _userRepository.RegisterUser(request.UserName, request.FullName, request.Password);
             return Ok(success); 
         }
         
