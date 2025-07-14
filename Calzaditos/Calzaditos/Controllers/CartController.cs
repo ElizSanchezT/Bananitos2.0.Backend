@@ -1,4 +1,5 @@
-﻿using Calzaditos.Models.Responses;
+﻿using Calzaditos.Models.Requests;
+using Calzaditos.Models.Responses;
 using Calzaditos.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -89,9 +90,9 @@ namespace Calzaditos.Controllers
 
         [HttpPost]
         [Route("AddProduct")]
-        public async Task<IActionResult> AddProduct(int productId, int selectedSize, int units) 
+        public async Task<IActionResult> AddProduct([FromBody] AddProductToCartRequest request) 
         {
-            if(units<=0) 
+            if(request.Quantity<=0) 
             {
                 var errorResponse = new Response<string>(null)
                 {
@@ -102,7 +103,7 @@ namespace Calzaditos.Controllers
                 return Json(errorResponse);
             }
 
-            var result = await _repository.AddProduct(1, productId, units, selectedSize); //TODO Obtener el Id del usuario autenticado
+            var result = await _repository.AddProduct(request.UserId, request.ProductId, request.Quantity, request.Size);
 
             var response = new Response<string>(null)
             {

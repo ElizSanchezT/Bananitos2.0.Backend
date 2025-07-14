@@ -1,4 +1,5 @@
-﻿using Calzaditos.Models.Responses;
+﻿using Calzaditos.Models.Requests;
+using Calzaditos.Models.Responses;
 using Calzaditos.Repositories;
 using Microsoft.AspNetCore.Mvc;
 

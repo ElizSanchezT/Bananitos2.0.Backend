@@ -1,4 +1,4 @@
-﻿namespace Calzaditos.Models.Responses
+﻿namespace Calzaditos.Models.Requests
 {
     public class CreateUserRequest
     {
