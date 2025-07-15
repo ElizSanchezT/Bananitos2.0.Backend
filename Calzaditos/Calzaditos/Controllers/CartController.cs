@@ -92,11 +92,11 @@ namespace Calzaditos.Controllers
         [Route("AddProduct")]
         public async Task<IActionResult> AddProduct([FromBody] AddProductToCartRequest request) 
         {
-            if(request.Quantity<=0) 
+            if(request.Quantity<0) 
             {
                 var errorResponse = new Response<string>(null)
                 {
-                    Error = "No se pueden agregar unidades no positivas",
+                    Error = "No se pueden agregar unidades negativas",
                     Message = null,
                     IsSuccess = false
                 };

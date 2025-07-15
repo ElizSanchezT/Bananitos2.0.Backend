@@ -33,7 +33,13 @@ namespace Calzaditos.Repositories
                     return false;
                 }
 
+                if (units == 0)
+                {
+                    return await RemoveProduct(userId,productId);
+                }
+
                 var cart = await _context.Carts
+                    .Include(x => x.Products)
                     .FirstOrDefaultAsync(x => x.UserId == userId && x.DeletedAt == null);
 
                 if (cart is null)
